@@ -1,5 +1,3 @@
-# yenny
-Curso web de terapias alternativas
 <!DOCTYPE html>
 <html lang="es">
 <head>
