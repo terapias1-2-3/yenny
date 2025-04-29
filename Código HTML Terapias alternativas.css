@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Profesional de Terapias Alternativas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #5D9C7E;
+            --primary-light: #8DBAA8;
+            --secondary: #D4A5A5;
+            --accent: #F5E6CA;
+            --dark: #3A4A42;
+            --light: #F8F5F2;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.8;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        
+        /* Header estilizado con gradiente suave */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: var(--light);
+            clip-path: ellipse(75% 100% at center top);
+        }
+        
+        header h1 {
+            font-size: clamp(2.5rem, 5vw, 3.2rem);
+            margin-bottom: 1rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+            animation: fadeInDown 1s ease;
+        }
+        
+        header p {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease;
+        }
+        
+        /* Imagen representativa */
+        .hero-image {
+            max-width: 800px;
+            margin: 2rem auto;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: block;
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+        }
+        
+        /* Menú de navegación moderno */
+        nav {
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--dark);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 1rem;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 1.2rem 0;
+        }
+        
+        nav li {
+            margin: 0 1.5rem;
+            position: relative;
+        }
+        
+        nav a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        /* Submenús desplegables */
+        .submenu {
+            position: relative;
+        }
+        
+        .submenu > a::after {
+            content: '▾';
+            margin-left: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .submenu-content {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: white;
+            min-width: 200px;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+        
+        .submenu:hover .submenu-content,
+        .submenu:focus-within .submenu-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .submenu-content a {
+            padding: 0.8rem 1rem;
+            display: block;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .submenu-content a:hover {
+            background: var(--light);
+        }
+        
+        /* Contenido principal con tarjetas */
+        main {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        
+        section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        
+        section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(93, 156, 126, 0.1);
+        }
+        
+        #denominacion {
+            background: linear-gradient(to right, white 60%, var(--accent));
+            border-left: 5px solid var(--primary);
+        }
+        
+        #creditos {
+            background: linear-gradient(to right, white 60%, var(--secondary));
+            border-left: 5px solid var(--secondary);
+        }
+        
+        #objetivos {
+            background: linear-gradient(to right, white 60%, var(--primary-light));
+            border-left: 5px solid var(--primary-light);
+        }
+        
+        /* Estilo para los artículos de terapias */
+        #temas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            background: transparent;
+            box-shadow: none;
+            padding: 0;
+        }
+        
+        #temas article {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        #temas article::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--primary);
+        }
+        
+        #temas article:nth-child(2)::before {
+            background: var(--secondary);
+        }
+        
+        #temas article:nth-child(3)::before {
+            background: var(--primary-light);
+        }
+        
+        #temas article:nth-child(4)::before {
+            background: var(--accent);
+        }
+        
+        #temas article:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* Pie de página con efecto ola */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem 2rem;
+            position: relative;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: var(--light);
+            clip-path: ellipse(75% 100% at center bottom);
+        }
+        
+        footer p {
+            max-width: 600px;
+            margin: 0 auto;
+            opacity: 0.8;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Efectos hover para botones */
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 5px 15px rgba(93, 156, 126, 0.3);
+            position: relative;
+            overflow: hidden;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn:hover {
+            background: var(--dark);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(58, 74, 66, 0.4);
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+                margin-left: auto;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                padding: 0;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+            }
+            
+            nav ul.active {
+                max-height: 1000px;
+                padding: 1rem 0;
+            }
+            
+            nav li {
+                margin: 0;
+            }
+            
+            nav a {
+                padding: 1rem;
+            }
+            
+            .submenu-content {
+                position: static;
+                transform: none;
+                box-shadow: none;
+                opacity: 1;
+                visibility: visible;
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease;
+                background: var(--light);
+            }
+            
+            .submenu.active .submenu-content {
+                max-height: 500px;
+            }
+            
+            .submenu > a::after {
+                content: '▸';
+            }
+            
+            .submenu.active > a::after {
+                content: '▾';
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cabecera inspiradora -->
+    <header>
+        <h1>Transforma tu Vida con Terapias Alternativas</h1>
+        <p>Descubre herramientas poderosas para el bienestar físico, emocional y espiritual en nuestro curso certificado</p>
+        <button class="btn" style="margin-top: 2rem;">Inscríbete ahora</button>
+        
+        <!-- Imagen representativa del curso -->
+        <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+             alt="Terapias alternativas: yoga, aromaterapia, meditación y masajes" 
+             class="hero-image"
+             loading="lazy">
+    </header>
+
+    <!-- Menú de navegación elegante -->
+    <nav>
+        <div class="nav-container">
+            <button class="menu-toggle" aria-label="Toggle menu">☰</button>
+            <ul id="main-menu">
+                <li class="submenu">
+                    <a href="#denominacion">Denominación ▾</a>
+                    <div class="submenu-content">
+                        <a href="#denominacion">Presentación</a>
+                        <a href="#denominacion">Certificación</a>
+                        <a href="#denominacion">Requisitos</a>
+                    </div>
+                </li>
+                <li class="submenu">
+                    <a href="#creditos">Créditos ▾</a>
+                    <div class="submenu-content">
+                        <a href="#creditos">Horas académicas</a>
+                        <a href="#creditos">Modalidades</a>
+                        <a href="#creditos">Certificación</a>
+                    </div>
+                </li>
+                <li class="submenu">
+                    <a href="#objetivos">Objetivos ▾</a>
+                    <div class="submenu-content">
+                        <a href="#objetivos">General</a>
+                        <a href="#objetivos">Específicos</a>
+                        <a href="#objetivos">Competencias</a>
+                    </div>
+                </li>
+                <li class="submenu">
+                    <a href="#temas">Terapias ▾</a>
+                    <div class="submenu-content">
+                        <a href="#musicoterapia">Musicoterapia</a>
+                        <a href="#biodanza">Biodanza</a>
+                        <a href="#esencias">Esencias Florales</a>
+                        <a href="#yoga">Yoga Terapéutico</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Contenido principal con diseño motivador -->
+    <main>
+        <!-- Sección de denominación del curso -->
+        <section id="denominacion">
+            <h2>Certificación Profesional en Terapias Holísticas</h2>
+            <p>Nuestro programa integra los enfoques más efectivos de las medicinas complementarias con una base científica sólida. Al finalizar, recibirás una certificación avalada por la Asociación Internacional de Terapias Alternativas.</p>
+            <button class="btn">¡Quiero más información!</button>
+        </section>
+
+        <!-- Sección de créditos académicos -->
+        <section id="creditos">
+            <h2>Formación Completa y Flexible</h2>
+            <p><strong>160 horas académicas</strong> (5 créditos internacionales) distribuidas en:</p>
+            <ul>
+                <li>100 horas de teoría interactiva</li>
+                <li>40 horas de prácticas supervisadas</li>
+                <li>20 horas de proyectos personales</li>
+            </ul>
+            <p>Modalidades presencial y virtual disponibles.</p>
+            <button class="btn">Conoce los horarios</button>
+        </section>
+
+        <!-- Sección de objetivos -->
+        <section id="objetivos">
+            <h2>Lo que lograrás con este curso</h2>
+            <h3>Objetivo Transformador:</h3>
+            <p>Desarrollar competencias profesionales para integrar diversas terapias alternativas en tu práctica, mejorando la calidad de vida de tus pacientes o en tu propio crecimiento personal.</p>
+            
+            <h3>Beneficios Clave:</h3>
+            <ul>
+                <li>Dominar técnicas efectivas para manejo del estrés y emociones</li>
+                <li>Aprender a personalizar terapias según necesidades individuales</li>
+                <li>Crear protocolos de tratamiento complementarios</li>
+                <li>Desarrollar una perspectiva holística de la salud</li>
+                <li>Ampliar tus oportunidades laborales en el campo del bienestar</li>
+            </ul>
+            <button class="btn" style="margin-top: 1.5rem;">Habla con un asesor</button>
+        </section>
+
+        <!-- Sección de temas principales con tarjetas interactivas -->
+        <section id="temas">
+            <h2 style="grid-column: 1/-1; text-align: center; margin-bottom: 0;">Explora Nuestras Terapias</h2>
+            <p style="grid-column: 1/-1; text-align: center; margin-bottom: 2rem;">Cada módulo está diseñado para una aprendizaje experiencial y transformador</p>
+            
+            <article id="musicoterapia">
+                <h3>Musicoterapia</h3>
+                <p>Utiliza el poder vibracional de la música para armonizar emociones, reducir ansiedad y activar procesos de sanación. Aprenderás técnicas basadas en evidencia científica.</p>
+                <p><strong>Incluye:</strong> Talleres vivenciales y creación de playlists terapéuticas</p>
+                <button class="btn" style="margin-top: 1rem;">Detalles del módulo</button>
+            </article>
+            
+            <article id="biodanza">
+                <h3>Biodanza</h3>
+                <p>Sistema de desarrollo humano que integra música, movimiento y vivencias en grupo para potenciar la alegría de vivir, la vitalidad y la conexión afectiva.</p>
+                <p><strong>Incluye:</strong> Sesiones prácticas semanales y metodología de facilitación</p>
+                <button class="btn" style="margin-top: 1rem;">Detalles del módulo</button>
+            </article>
+            
+            <article id="esencias">
+                <h3>Esencias Florales</h3>
+                <p>Dominarás el sistema Bach y otros sistemas florales contemporáneos para equilibrar estados emocionales y potenciar el crecimiento personal.</p>
+                <p><strong>Incluye:</strong> Kit inicial de esencias y manual de diagnóstico</p>
+                <button class="btn" style="margin-top: 1rem;">Detalles del módulo</button>
+            </article>
+            
+            <article id="yoga">
+                <h3>Yoga Terapéutico</h3>
+                <p>Adaptaciones del yoga tradicional para necesidades específicas: manejo del dolor, rehabilitación, estrés y equilibrio emocional.</p>
+                <p><strong>Incluye:</strong> Secuencias para diferentes condiciones y certificación básica</p>
+                <button class="btn" style="margin-top: 1rem;">Detalles del módulo</button>
+            </article>
+        </section>
+    </main>
+
+    <!-- Pie de página inspirador -->
+    <footer>
+        <p>© 2023 Instituto de Terapias Integrativas. Todos los derechos reservados.</p>
+        <p style="margin-top: 1rem;">"El verdadero viaje de descubrimiento consiste no en buscar nuevos paisajes, sino en mirar con nuevos ojos" - Marcel Proust</p>
+        <button class="btn" style="margin-top: 1.5rem;">Contacta con nosotros</button>
+    </footer>
+
+    <script>
+        // Función para manejar los menús desplegables
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuToggle = document.querySelector('.menu-toggle');
+            const mainMenu = document.getElementById('main-menu');
+            const submenus = document.querySelectorAll('.submenu');
+            
+            // Toggle para el menú principal en móviles
+            menuToggle.addEventListener('click', function() {
+                mainMenu.classList.toggle('active');
+                this.setAttribute('aria-expanded', mainMenu.classList.contains('active'));
+            });
+            
+            // Manejo de submenús
+            submenus.forEach(submenu => {
+                const link = submenu.querySelector('a');
+                const content = submenu.querySelector('.submenu-content');
+                
+                // Para desktop
+                link.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.preventDefault();
+                        submenu.classList.toggle('active');
+                    }
+                });
+                
+                // Cerrar al hacer clic fuera
+                document.addEventListener('click', function(e) {
+                    if (!submenu.contains(e.target)) {
+                        submenu.classList.remove('active');
+                    }
+                });
+            });
+            
+            // Optimización: Cargar imágenes solo cuando sean visibles
+            const lazyLoadImages = () => {
+                const images = document.querySelectorAll('img[loading="lazy"]');
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            img.src = img.getAttribute('data-src') || img.src;
+                            observer.unobserve(img);
+                        }
+                    });
+                }, { rootMargin: '100px' });
+                
+                images.forEach(img => observer.observe(img));
+            };
+            
+            lazyLoadImages();
+            
+            // Mejora de accesibilidad para teclado
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        this.click();
+                        e.preventDefault();
+                    }
+                });
+            });
+            
+            // Smooth scrolling para enlaces internos
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
